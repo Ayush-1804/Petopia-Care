@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Food</title>
+<style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FCE4EC;
+    overflow-x: hidden;
+}
+
+/* Glass Effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border-radius: 15px; 
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.logo h1 {
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 3s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.header .logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: filter 0.3s ease;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.6);
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Main Content */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 100px 20px 20px; /* Padding adjusted to leave space for the fixed header */
+    justify-items: center;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.05);
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card button {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.card button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.card button:hover {
+    background-color: #d81b60;
+    transform: translateY(-2px);
+}
+
+.card input {
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.card input:focus {
+    background-color: #fce4ec;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.container .card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+</style>
+</head>
+<body>
+    <div class="header">
+        <a href="homepage.html" class="logo">
+            <img src="image\logo-removebg-preview.png" alt="">
+            <h1>PETOPIA CARE</h1>
+        </a>
+        <input type="text" class="search-bar" placeholder="Search Food..." id="search-bar">
+        <a href="cart.html" class="cart-icon" id="cart-icon"  style="text-decoration: none;">🛒</a>
+    </div>
+    <div class="container" id="food-container"></div>
+
+    <script>
+        document.addEventListener("scroll", function () {
+            const header = document.querySelector(".header");
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+
+        const foodItems = [
+            { id: 1, name: "Dog Food - Chicken", description: "High protein dog food with real chicken.", price: "20", image: "image/Dog Food - Chicken.webp" },
+            { id: 2, name: "Cat Food - Salmon", description: "Delicious salmon cat food for shiny fur.", price: "18", image: "image/Cat Food - Salmon.jpg" },
+            { id: 3, name: "Bird Seeds - Mixed", description: "Nutritious seeds for all bird types.", price: "10", image: "image/Bird Seeds - Mixed.jpg" },
+            { id: 4, name: "Fish Food - Flakes", description: "Tropical fish flakes for vibrant health.", price: "12", image: "image/Fish Food - Flakes.jpg" },
+            { id: 5, name: "Dog Food - Lamb", description: "Premium lamb dog food for sensitive stomachs.", price: "22", image: "image/Dog Food - Lamb.jpg" },
+            { id: 6, name: "Cat Food - Tuna", description: "Tuna flavored food for picky eaters.", price: "19", image: "image/Cat Food - Tuna.jpg" },
+            { id: 7, name: "Bird Pellets", description: "Balanced pellets for healthy birds.", price: "15", image: "image.Bird Pellets.jpg" },
+            { id: 8, name: "Fish Food - Granules", description: "Sinking granules for bottom feeders.", price: "$14", image: "image/Fish Food - Granules.jpg" },
+            { id: 9, name: "Dog Biscuits", description: "Crunchy treats for active dogs.", price: "8", image: "image/Dog Biscuits.jpg" },
+            { id: 10, name: "Cat Treats", description: "Yummy treats for playful cats.", price: "7", image: "image/Cat Treats.jpg" },
+            { id: 11, name: "Parrot Food", description: "Special mix for parrots.", price: "13", image: "image/Parrot Food.jpg" },
+            { id: 12, name: "Goldfish Food", description: "Flakes designed for goldfish.", price: "9", image: "image/Goldfish Food.jpg" },
+            { id: 13, name: "Puppy Food", description: "Nutrient-rich food for growing puppies.", price: "25", image: "image/Puppy Food.jpg" },
+            { id: 14, name: "Kitten Food", description: "Special formula for kittens.", price: "23", image: "image/Kitten Food.jpg" },
+            { id: 15, name: "Bird Food - Tropical", description: "Exotic blend for tropical birds.", price: "16", image: "image/Bird Food - Tropical.jpg" },
+            { id: 16, name: "Fish Pellets", description: "High-protein pellets for carnivorous fish.", price: "18", image: "image/Fish Pellets.jpg" },
+            { id: 17, name: "Dog Food - Beef", description: "Premium beef dog food for strong muscles.", price: "24", image: "image/Dog Food - Beef.jpg" },
+            { id: 18, name: "Cat Food - Chicken", description: "Tender chicken food for cats.", price: "21", image: "image/Cat Food - Chicken.jpg" },
+        ];
+
+
+        const foodContainer = document.getElementById("food-container");
+const searchBar = document.getElementById("search-bar");
+
+// Function to check if user is logged in
+function isUserLoggedIn() {
+    return localStorage.getItem("token") !== null;
+}
+
+// Function to load food items
+function loadFoodItems(items) {
+    foodContainer.innerHTML = ''; // Clear existing items
+    items.forEach(item => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        
+        card.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p><strong>Price:</strong> ₹${item.price}</p>
+            <button class="add-to-cart" data-id="${item.id}" data-name="${item.name}" data-image="${item.image}" data-price="${item.price}">Add to Cart</button>
+        `;
+        foodContainer.appendChild(card);
+    });
+}
+
+// Function to search food items
+function searchFood() {
+    const query = searchBar.value.toLowerCase();
+    const filteredItems = foodItems.filter(item => item.name.toLowerCase().includes(query));
+    loadFoodItems(filteredItems);
+}
+
+// Function to add an item to the cart
+// Function to add an item to the cart
+document.addEventListener("DOMContentLoaded", function () {
+    let token = localStorage.getItem("token");
+
+    async function addToCart(itemName, itemImage, itemPrice) {
+        if (!token) {
+            alert("Please log in to add items to the cart.");
+            return;
+        }
+
+        const cartData = { name: itemName, image: itemImage, price: parseFloat(itemPrice) };
+
+        try {
+            let response = await fetch("http://localhost:5000/cart/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(cartData)
+            });
+
+            if (response.ok) {
+                alert(`${itemName} added to cart!`);
+            } else {
+                let errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to add item to cart. Please try again.");
+        }
+    }
+
+    // Attach event listener to dynamically created "Add to Cart" buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("add-to-cart")) {
+            let button = event.target;
+            let itemName = button.getAttribute("data-name");
+            let itemImage = button.getAttribute("data-image");
+            let itemPrice = button.getAttribute("data-price");
+
+            addToCart(itemName, itemImage, itemPrice);
+        }
+    });
+});
+
+
+searchBar.addEventListener("input", searchFood);
+loadFoodItems(foodItems);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .summary div {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .order {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .order h3 {
+            margin-top: 0;
+        }
+        .order-details {
+            margin-bottom: 10px;
+        }
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .status-select {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Confirmed Orders</h1>
+
+    <div class="summary">
+        <div>Total Orders: <span id="totalOrders">0</span></div>
+        <div>Pending: <span id="pendingOrders">0</span></div>
+        <div>Order Packing: <span id="packingOrders">0</span></div>
+        <div>Out for Delivery: <span id="outForDeliveryOrders">0</span></div>
+        <div>Delivered: <span id="deliveredOrders">0</span></div>
+    </div>
+
+    <div id="orders"></div>
+
+    <script>
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        const ordersContainer = document.getElementById('orders');
+
+        function displayOrders() {
+            // Sort orders by latest first
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            ordersContainer.innerHTML = '';
+            if (orders.length > 0) {
+                orders.forEach((order, index) => {
+                    const orderDiv = document.createElement('div');
+                    orderDiv.classList.add('order');
+                    orderDiv.innerHTML = `
+                        <h3>Order for ${order.userName}</h3>
+                        <p class="order-details"><strong>Address:</strong> ${order.address.label}<br>
+                        ${order.address.street}, ${order.address.city}, ${order.address.state} ${order.address.zip}<br>
+                        ${order.address.country}</p>
+                        <h4>Items:</h4>
+                        <ul>${order.items.map(item => `<li>${item.name} - ${item.quantity} x ₹${item.price}</li>`).join('')}</ul>
+                        <p class="order-details"><strong>Total Price:</strong> ₹${order.totalPrice}</p>
+                        
+                        <label for="status-${index}">Order Status:</label>
+                        <select class="status-select" id="status-${index}" onchange="updateStatus(${index}, this.value)">
+                            <option value="Pending" ${order.status === "Pending" ? "selected" : ""}>Pending</option>
+                            <option value="Order is Packing" ${order.status === "Order is Packing" ? "selected" : ""}>Order is Packing</option>
+                            <option value="Out for Delivery" ${order.status === "Out for Delivery" ? "selected" : ""}>Out for Delivery</option>
+                            <option value="Order Delivered" ${order.status === "Order Delivered" ? "selected" : ""}>Order Delivered</option>
+                        </select>
+
+                        <button class="remove-btn" onclick="removeOrder(${index})">Remove</button>
+                    `;
+                    ordersContainer.appendChild(orderDiv);
+                });
+
+                updateSummary();
+            } else {
+                ordersContainer.innerHTML = "<p>No orders found.</p>";
+            }
+        }
+
+        function updateStatus(index, newStatus) {
+            orders[index].status = newStatus;
+            localStorage.setItem('orders', JSON.stringify(orders));
+            displayOrders();
+        }
+
+        function removeOrder(index) {
+            if (!confirm("Are you sure you want to remove this order?")) return;
+
+            orders.splice(index, 1);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            displayOrders();
+        }
+
+        function updateSummary() {
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = orders.filter(order => order.status === "Pending").length;
+            document.getElementById('packingOrders').textContent = orders.filter(order => order.status === "Order is Packing").length;
+            document.getElementById('outForDeliveryOrders').textContent = orders.filter(order => order.status === "Out for Delivery").length;
+            document.getElementById('deliveredOrders').textContent = orders.filter(order => order.status === "Order Delivered").length;
+        }
+
+        displayOrders();
+    </script>
+</body>
+</html>

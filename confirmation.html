@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+       /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6f1; /* Lightest Pink */
+    color: #333;
+    padding: 20px;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #d06fa1; /* Slightly darker pink */
+    margin-bottom: 20px;
+}
+
+/* Section Styling */
+.section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Address Section */
+.section.address {
+    background-color: #f9f9f9;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #d06fa1; /* Darker pink for headings */
+    margin-bottom: 10px;
+}
+
+p#address {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Cart Items Section */
+.section.items {
+    background-color: #f9f9f9;
+}
+
+ul#cart-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul#cart-items li {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+ul#cart-items li span {
+    color: #d06fa1;
+}
+
+/* Total Price Section */
+.section.total-price {
+    background-color: #f9f9f9;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+h2#total-price {
+    color: #d06fa1; /* Darker pink */
+}
+
+/* Button Styling */
+button {
+    background-color: #d06fa1; /* Pink color */
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c25a86; /* Darker pink on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    p#address, ul#cart-items li {
+        font-size: 1rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+    <div class="section address">
+        <h2>Shipping Address</h2>
+        <p id="address"></p>
+    </div>
+    <div class="section items">
+        <h2>Items in Cart</h2>
+        <ul id="cart-items"></ul>
+    </div>
+    <div class="section total-price">
+        <h2>Total Price: ₹<span id="total-price"></span></h2>
+    </div>
+    <button id="rzp-button1">Pay with Razorpay</button>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        // Fetch order confirmation data
+        fetch('/confirmation', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display address
+            document.getElementById('address').innerHTML = `${data.address.label}<br>${data.address.street}, ${data.address.city}, ${data.address.state} ${data.address.zip}<br>${data.address.country}`;
+
+            // Display items in cart
+            const itemsSection = document.getElementById('cart-items');
+            let totalPrice = 0;
+            data.items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `${item.name} - ${item.quantity} x ₹${item.price}`;
+                itemsSection.appendChild(listItem);
+                totalPrice += item.quantity * item.price;
+            });
+
+            // Display total price
+            document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+
+            // Save order data for later use
+            const orderData = {
+                userName: data.userName,
+                address: data.address,
+                items: data.items,
+                totalPrice: totalPrice
+            };
+
+            // Configure Razorpay options
+            var options = {
+                "key": "rzp_test_jS4eq5qyIvdyCm", // Replace with your Razorpay key
+                "amount": totalPrice * 100, // Total in paise
+                "currency": "INR",
+                "name": "Petopia Care",
+                "description": "Order Payment",
+                "image": "image/logo.jpeg",
+                "handler": function (response) {
+                    // Save order details after successful payment
+                    orderData.paymentId = response.razorpay_payment_id;
+                    
+                    // Retrieve existing orders or initialize an empty array
+                    const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+                    existingOrders.push(orderData); // Add new order
+                    localStorage.setItem('orders', JSON.stringify(existingOrders)); // Save back to localStorage
+
+                    // Redirect to order success page
+                    window.location.href = 'ok.html';
+                },
+                "prefill": {
+                    "name": "",
+                    "email": "",
+                    "contact": ""
+                },
+                "theme": { "color": "#3399cc" }
+            };
+
+            // Bind Razorpay button to open the payment modal
+            document.getElementById('rzp-button1').onclick = function(e) {
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+                e.preventDefault();
+            };
+        })
+        .catch(error => console.error('Error fetching confirmation data:', error));
+    </script>
+</body>
+</html>

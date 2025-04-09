@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Food</title>
+<style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FCE4EC;
+    overflow-x: hidden;
+}
+
+/* Glass Effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border-radius: 15px; 
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.logo h1 {
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 3s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.header .logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: filter 0.3s ease;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.6);
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Main Content */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 100px 20px 20px; /* Padding adjusted to leave space for the fixed header */
+    justify-items: center;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.05);
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card button {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.card button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.card button:hover {
+    background-color: #d81b60;
+    transform: translateY(-2px);
+}
+
+.card input {
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.card input:focus {
+    background-color: #fce4ec;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.container .card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+</style>
+</head>
+<body>
+    <div class="header">
+        <a href="homepage.html" class="logo">
+            <img src="image\logo-removebg-preview.png" alt="">
+            <h1>PETOPIA CARE</h1>
+        </a>
+        <input type="text" class="search-bar" placeholder="Search Food..." id="search-bar">
+        <a href="cart.html" class="cart-icon" id="cart-icon"  style="text-decoration: none;">🛒</a>
+    </div>
+    <div class="container" id="accessories-container"></div>
+
+    <script>
+        document.addEventListener("scroll", function () {
+            const header = document.querySelector(".header");
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+
+        const accessoriesItems = [
+    { id: 1, name: "Dog Collar", description: "Adjustable nylon collar for dogs.", price: "12", image: "image/Dog Collar.jpg" },
+    { id: 2, name: "Cat Scratching Post", description: "Durable scratching post for cats.", price: "25", image: "image/Cat Scratching Post.jpg" },
+    { id: 3, name: "Bird Cage", description: "Spacious cage for small to medium birds.", price: "50", image: "image/Bird Cage.jpg" },
+    { id: 4, name: "Fish Tank", description: "Glass aquarium for freshwater fish.", price: "75", image: "image/Fish Tank.jpg" },
+    { id: 5, name: "Dog Leash", description: "Strong and durable leash for all dog sizes.", price: "15", image: "image/Dog Leash.jpg" },
+    { id: 6, name: "Cat Bed", description: "Soft and cozy bed for cats.", price: "30", image: "image/Cat Bed.jpg" },
+    { id: 7, name: "Bird Perch", description: "Comfortable wooden perch for birds.", price: "10", image: "image/Bird Perch.jpg" },
+    { id: 8, name: "Fish Tank Filter", description: "Powerful filter for a clean aquarium.", price: "40", image: "image/Fish Tank Filter.jpg" },
+    { id: 9, name: "Dog Shampoo", description: "Gentle shampoo for a clean and healthy coat.", price: "10", image: "image/Dog Shampoo.jpg" },
+    { id: 10, name: "Cat Litter Box", description: "Spacious litter box with easy cleaning.", price: "20", image: "image/Cat Litter Box.webp" },
+    { id: 11, name: "Bird Bath", description: "Compact bird bath for hydration and cleaning.", price: "18", image: "image/Bird Bath.jpg" },
+    { id: 12, name: "Fish Net", description: "Fine mesh net for easy fish handling.", price: "8", image: "image/Fish Net.jpg" },
+];
+
+const accessoriesContainer = document.getElementById("accessories-container");
+const searchBar = document.getElementById("search-bar");
+
+// Function to check if the user is logged in
+function isUserLoggedIn() {
+    return localStorage.getItem("token") !== null; 
+}
+
+// Function to load accessory items
+function loadAccessoriesItems(items) {
+    accessoriesContainer.innerHTML = ''; // Clear existing items
+    items.forEach(item => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        
+        card.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p><strong>Price:</strong> ₹${item.price}</p>
+            <button class="add-to-cart" data-id="${item.id}" data-name="${item.name}" data-image="${item.image}" data-price="${item.price}">Add to Cart</button>
+        `;
+        accessoriesContainer.appendChild(card);
+    });
+}
+
+// Function to handle searching accessories
+function searchAccessories() {
+    const query = searchBar.value.toLowerCase();
+    const filteredItems = accessoriesItems.filter(item => item.name.toLowerCase().includes(query));
+    loadAccessoriesItems(filteredItems);
+}
+
+// Function to add an item to the cart
+// Function to add an item to the cart
+async function addToCart(itemName, itemImage, itemPrice) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Please log in to add items to the cart.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: itemName, image: itemImage, price: itemPrice })
+        });
+
+        if (response.ok) {
+            alert(`${itemName} added to cart!`);
+            location.reload(); // Refresh cart display
+        } else {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+        alert('Failed to add item to cart. Please try again.');
+    }
+}
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("add-to-cart")) {
+        let itemName = event.target.getAttribute("data-name");
+        let itemImage = event.target.getAttribute("data-image");
+        let itemPrice = event.target.getAttribute("data-price");
+
+        addToCart(itemName, itemImage, itemPrice);
+    }
+});
+
+
+// Attach search functionality
+searchBar.addEventListener("input", searchAccessories);
+
+// Load accessories initially
+loadAccessoriesItems(accessoriesItems);
+
+
+    </script>
+</body>
+</html>

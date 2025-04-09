@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Page - Petopia Care</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inconsolata", monospace;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #ffe4e1, #fadadd);
+    color: #333;
+    overflow: auto; 
+}
+
+/* Header Animation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    font-weight: bolder;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+header a {
+    text-decoration: none;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10px;
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+    mix-blend-mode: multiply;
+}
+
+/* Hero Section Animation */
+.hero {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.left-side:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.left-side h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.left-side label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.left-side select {
+    width: 100%;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.left-side select:focus {
+    border: 1px solid #4ecdc4;
+}
+
+/* Right-side Image Hover Animation */
+.right-side {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    top: 50px;
+    position: relative; /* Added for positioning the pseudo-element */
+}
+
+.right-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.right-side img {
+    width: 60%; /* Adjust the size of the image */
+    height: 60%; /* Adjust the size of the image */
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1; /* Ensure the image stays on top of the heart shape */
+}
+
+.right-side img:hover {
+    transform: scale(1.05);
+}
+
+/* Heart shape with baby pink color and blur effect */
+.heart {
+    position: absolute;
+    width: 500px; /* You can adjust the size */
+    height: 500px; /* You can adjust the size */
+    background: 
+        /* 1 */ radial-gradient(circle at 60% 65%, #FFB6C1 64%, transparent 65%) top left/50% 50%, 
+        /* 2 */ radial-gradient(circle at 40% 65%, #FFB6C1 64%, transparent 65%) top right/50% 50%, 
+        /* 3 */ conic-gradient(from -45deg at 50% 85.5%, #FFB6C1 90deg, transparent 0) bottom/100% 50%;
+    background-repeat: no-repeat;
+    filter: blur(10px); /* Apply blur effect */
+    z-index: 0; /* Place it behind the image */
+    border-radius: 50%; /* Ensures the heart shape stays round */
+}
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049
+        }
+
+/* Styling the result section */
+.result-page {
+    margin-top: 20px;
+    padding: 20px;
+    background: transparent;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    animation: slideUp 0.7s ease-out;
+}
+
+/* Result card styling */
+.result-page .card {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fefefe, #faf0e6);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.result-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Card headings */
+.result-page .card h3 {
+    color: #4caf50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Card paragraphs */
+.result-page .card p {
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Medicine list styling */
+.medicines-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add space between cards */
+}
+
+.medicine-card {
+    width: 150px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease-in-out;
+}
+
+.medicine-card:hover {
+    transform: scale(1.05); /* Scale up the card when hovered */
+}
+
+.medicine-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.medicine-card p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.add-to-cart {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+
+/* Animation for results sliding up */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollable behavior when results are long */
+.result-page {
+    max-height: 100%;
+    overflow-y: auto;
+}
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <a href="homepage.html">
+            <div class="logo">
+                <img src="image/logo-removebg-preview.png" alt="Petopia Logo">
+                <h1>PETOPIA CARE</h1>
+            </div>
+        </a>
+        <a href="cart.html" class="cart-icon" id="cart-icon">🛒</a>
+    </header>
+
+    <section class="hero">
+        <!-- Left Side -->
+        <section class="left-side">
+            <h4>Fish are serene and fascinating pets that bring tranquility with their graceful movements and vibrant colors.</h4>
+            <form id="fishHealthForm">
+                <label for="fish-breeds">Choose a fish breed:</label>
+                <select id="fish-breeds" name="fish-breeds">
+                    <option value="0">select</option>
+                    <option value="goldfish">Goldfish</option>
+                    <option value="betta">Betta</option>
+                    <option value="guppy">Guppy</option>
+                    <option value="angelfish">Angelfish</option>
+                    <option value="cichlid">Cichlid</option>
+                    <option value="tetras">Tetras</option>
+                    <option value="mollies">Mollies</option>
+                </select>
+                <label for="fish-health-issues">Select a common fish health issue:</label>
+                <select id="fish-health-issues" name="fish-health-issues">
+                    <option value="0">select</option>
+                    <option value="ich">Ich (White Spot Disease)</option>
+                    <option value="fin-rot">Fin Rot</option>
+                    <option value="swim-bladder">Swim Bladder Disorder</option>
+                    <option value="fungal-infection">Fungal Infection</option>
+                    <option value="parasitic-infestation">Parasitic Infestation</option>
+                    <option value="ammonia-poisoning">Ammonia Poisoning</option>
+                    <option value="dropsy">Dropsy</option>
+                </select>
+                <br>
+                <button type="button" onclick="showFishHealthInfo()">Submit</button>
+            </form>
+            <br>
+        </section>
+    
+        <!-- Right Side -->
+        <aside class="right-side">
+            <div class="heart"></div>
+            <img src="image\cute-fish2.webp" alt="Fish Image">
+        </aside>
+    </section>
+
+    <section class="result-page">
+        <div id="result">
+        </div>
+    </section>
+
+
+    <script>
+         const fishHealthData = {
+            "ich": {
+                description: "Ich is a parasitic infection causing white spots and irritation.",
+                solution: "Treated with anti-parasitic medication and raising water temperature.",
+                medicines: [
+                    { name: "Anti-Parasitic Solution", image: "image/anti-parasitic.jpg", price: "15" },
+                    { name: "Ich Treatment", image: "image/ich-treatment.jpg", price: "15" }
+                ]
+            },
+            "fin-rot": {
+                description: "Fin rot is a bacterial infection that leads to frayed or discolored fins.",
+                solution: "Use antibacterial treatments and maintain clean water.",
+                medicines: [
+                    { name: "Antibacterial Treatment", image: "image/fin-rot antibacterial.jpg", price: "15" },
+                    { name: "Water Conditioner", image: "image/water-conditioner.jpg", price: "15" }
+                ]
+            },
+            "swim-bladder": {
+                description: "Swim bladder disorder causes difficulty in swimming and floating abnormally.",
+                solution: "Feed a fiber-rich diet and use swim bladder treatment.",
+                medicines: [
+                    { name: "Swim Bladder Treatment", image: "image/swim-bladder.jpg", price: "15" },
+                    { name: "Epsom Salt", image: "image/epsom-salt.jpg", price: "15" }
+                ]
+            },
+            "fungal-infection": {
+                description: "Fungal infections appear as cotton-like growths on the body or fins.",
+                solution: "Treated with antifungal medication and improved water quality.",
+                medicines: [
+                    { name: "Antifungal Treatment", image: "image/fungal-infection antifungal.webp", price: "15" },
+                    { name: "Aquarium Salt", image: "image/aquarium-salt.jpg", price: "15" }
+            ]
+            },
+            "parasitic-infestation": {
+                description: "Parasites cause scratching, rapid breathing, and weight loss in fish.",
+                solution: "Use anti-parasitic treatments and proper quarantine.",
+                medicines: [
+                    { name: "Parasite Control", image: "image/parasite-control.jpg", price: "15" },
+                    { name: "General Cure", image: "image/general-cure.jpg", price: "15" }
+                ]
+            },
+            "ammonia-poisoning": {
+                description: "High ammonia levels cause red gills, lethargy, and difficulty breathing.",
+                solution: "Use ammonia removers and improve filtration.",
+                medicines: [
+                    { name: "Ammonia Neutralizer", image: "image/ammonia-neutralizer.webp", price: "15" },
+                    { name: "Water Test Kit", image: "image/water-test-kit.jpg", price: "15" }
+                ]
+            },
+            "dropsy": {
+                description: "Dropsy is a serious bacterial infection causing swelling and pinecone-like scales.",
+                solution: "Treated with antibacterial medication and improved diet.",
+                medicines: [
+                    { name: "Broad Spectrum Antibiotic", image: "image/dropsy antibiotic.jpg", price: "15" },
+                    { name: "Epsom Salt", image: "image/dropsy epsom-salt.jpg", price: "15" }
+                ]
+            },
+        };
+        
+        function showFishHealthInfo() {
+            const healthIssuesDropdown = document.getElementById("fish-health-issues");
+            const selectedIssue = healthIssuesDropdown.value;
+            const resultContainer = document.getElementById("result");
+            resultContainer.innerHTML = "";
+        
+            if (fishHealthData[selectedIssue]) {
+                const data = fishHealthData[selectedIssue];
+                const card = document.createElement("div");
+                card.className = "card";
+        
+                card.innerHTML = `
+                    <h3>${selectedIssue.replace(/-/g, " ").toUpperCase()}</h3>
+                    <p>${data.description}</p>
+                    <p><strong>Solution:</strong> ${data.solution}</p>
+                    <p><strong>Medicines:</strong></p>
+                    <div class="medicines-container">
+                        ${data.medicines.map(
+                            (med) => `
+                                <div class="medicine-card">
+                                    <img src="${med.image}" alt="${med.name}" class="medicine-image">
+                                    <p>${med.name}</p>
+                                    <p><strong>Price:</strong> ₹${med.price}</p>
+                                   
+                                </div>
+                            `
+                        ).join("")}
+                    </div>
+                `;
+        
+                resultContainer.appendChild(card);
+            } else {
+                resultContainer.innerHTML = "<p>Please select a valid health issue.</p>";
+            }
+           
+        }
+
+        </script>
+<script src="addtocart.js">
+  document.addEventListener("DOMContentLoaded", function () {
+    let token = localStorage.getItem('token');
+
+    // Function to add an item to the cart
+    async function addToCart(medicineName, price, image, category = 'fish') {
+        if (!token) {
+            alert('Please log in to add items to your cart.');
+            return;
+        }
+
+        const cartData = { name: medicineName, price: parseFloat(price), image, category };
+
+        try {
+            let response = await fetch('http://localhost:5000/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify(cartData)
+            });
+
+            if (response.ok) {
+                alert(`${medicineName} added to cart`);
+            } else {
+                let errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to add item to cart. Please try again.');
+        }
+    }
+
+    // Attach event listener to dynamically created "Add to Cart" buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("add-to-cart")) {
+            let medicineCard = event.target.closest(".medicine-card");
+            let medicineName = medicineCard.querySelector("p").innerText;
+            let medicineImage = medicineCard.querySelector("img").src;
+            let medicinePrice = medicineCard.querySelector("strong").nextSibling.nodeValue.trim().replace("$", "");
+
+            addToCart(medicineName, medicinePrice, medicineImage);
+        }
+    });
+});
+
+</script>
+
+        
+</body>
+</html>
+

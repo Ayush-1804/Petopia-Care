@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Page - Petopia Care</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inconsolata", monospace;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #ffe4e1, #fadadd);
+    color: #333;
+    overflow: auto; 
+}
+
+/* Header Animation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    font-weight: bolder;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+header a {
+    text-decoration: none;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10px;
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+    mix-blend-mode: multiply;
+}
+
+/* Hero Section Animation */
+.hero {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.left-side:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.left-side h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.left-side label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.left-side select {
+    width: 100%;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.left-side select:focus {
+    border: 1px solid #4ecdc4;
+}
+
+/* Right-side Image Hover Animation */
+.right-side {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    top: 50px;
+    position: relative; /* Added for positioning the pseudo-element */
+}
+
+.right-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.right-side img {
+    width: 60%; /* Adjust the size of the image */
+    height: 60%; /* Adjust the size of the image */
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1; /* Ensure the image stays on top of the heart shape */
+}
+
+.right-side img:hover {
+    transform: scale(1.05);
+}
+
+/* Heart shape with baby pink color and blur effect */
+.heart {
+    position: absolute;
+    width: 500px; /* You can adjust the size */
+    height: 500px; /* You can adjust the size */
+    background: 
+        /* 1 */ radial-gradient(circle at 60% 65%, #FFB6C1 64%, transparent 65%) top left/50% 50%, 
+        /* 2 */ radial-gradient(circle at 40% 65%, #FFB6C1 64%, transparent 65%) top right/50% 50%, 
+        /* 3 */ conic-gradient(from -45deg at 50% 85.5%, #FFB6C1 90deg, transparent 0) bottom/100% 50%;
+    background-repeat: no-repeat;
+    filter: blur(10px); /* Apply blur effect */
+    z-index: 0; /* Place it behind the image */
+    border-radius: 50%; /* Ensures the heart shape stays round */
+}
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049
+        }
+
+/* Styling the result section */
+.result-page {
+    margin-top: 20px;
+    padding: 20px;
+    background: transparent;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    animation: slideUp 0.7s ease-out;
+}
+
+/* Result card styling */
+.result-page .card {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fefefe, #faf0e6);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.result-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Card headings */
+.result-page .card h3 {
+    color: #4caf50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Card paragraphs */
+.result-page .card p {
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Medicine list styling */
+.medicines-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add space between cards */
+}
+
+.medicine-card {
+    width: 150px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease-in-out;
+}
+
+.medicine-card:hover {
+    transform: scale(1.05); /* Scale up the card when hovered */
+}
+
+.medicine-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.medicine-card p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.add-to-cart {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+
+/* Animation for results sliding up */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollable behavior when results are long */
+.result-page {
+    max-height: 100%;
+    overflow-y: auto;
+}
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="homepage.html">
+            <div class="logo">
+                <img src="image/logo-removebg-preview.png" alt="Petopia Logo">
+                <h1>PETOPIA CARE</h1>
+            </div>
+        </a>
+        <a href="cart.html" class="cart-icon" id="cart-icon">🛒</a>
+    </header>
+
+    <section class="hero">
+        <!-- Left Side -->
+        <section class="left-side">
+            <h4>Dogs are loyal, loving companions who bring joy, comfort, and unwavering devotion to human lives.</h4>
+            <form id="healthForm">
+            <label for="dog-breeds">Choose a dog breed:</label>
+            <select id="dog-breeds" name="dog-breeds">
+                <option value="0">select</option>
+                <option value="labrador-retriever">Labrador Retriever</option>
+                <option value="golden-retriever">Golden Retriever</option>
+                <option value="german-shepherd">German Shepherd</option>
+                <option value="bulldog">Bulldog</option>
+                <option value="poodle">Poodle</option>
+                <option value="beagle">Beagle</option>
+                <option value="rottweiler">Rottweiler</option>
+                <option value="dachshund">Dachshund</option>
+                <option value="shih-tzu">Shih Tzu</option>
+                <option value="boxer">Boxer</option>
+                <option value="chihuahua">Chihuahua</option>
+                <option value="pomeranian">Pomeranian</option>
+                <option value="siberian-husky">Siberian Husky</option>
+                <option value="border-collie">Border Collie</option>
+                <option value="yorkshire-terrier">Yorkshire Terrier</option>
+                <option value="great-dane">Great Dane</option>
+                <option value="cocker-spaniel">Cocker Spaniel</option>
+                <option value="doberman-pinscher">Doberman Pinscher</option>
+                <option value="basset-hound">Basset Hound</option>
+                <option value="saint-bernard">Saint Bernard</option>
+            </select>
+            <label for="dog-health-issues">Select a common dog health issue:</label>
+            <select id="dog-health-issues" name="dog-health-issues">
+                <option value="0">select</option>
+                <option value="parvovirus">Parvovirus</option>
+                <option value="distemper">Distemper</option>
+                <option value="kennel-cough">Kennel Cough</option>
+                <option value="heartworms">Heartworms</option>
+                <option value="fleas-and-ticks">Fleas and Ticks</option>
+                <option value="ear-infections">Ear Infections</option>
+                <option value="hip-dysplasia">Hip Dysplasia</option>
+                <option value="skin-allergies">Skin Allergies</option>
+                <option value="obesity">Obesity</option>
+                <option value="dental-disease">Dental Disease</option>
+                <option value="arthritis">Arthritis</option>
+                <option value="bladder-infections">Bladder Infections</option>
+                <option value="diabetes">Diabetes</option>
+                <option value="heatstroke">Heatstroke</option>
+                <option value="cataracts">Cataracts</option>
+                <option value="anal-gland-issues">Anal Gland Issues</option>
+                <option value="bloat">Bloat (Gastric Dilatation-Volvulus)</option>
+                <option value="lyme-disease">Lyme Disease</option>
+                <option value="cancer">Cancer</option>
+                <option value="seizures">Seizures</option>
+            </select>
+            <br>
+            <button type="button" onclick="showHealthInfo()">Submit</button>
+            </form>
+            <br>
+        </section>
+
+        <!-- Right Side -->
+        <aside class="right-side">
+            <div class="heart"></div>
+            <img src="image\cute-dog3.png" alt="Dog Image">
+        </aside>
+    </section>
+
+    <section class="result-page">
+        <div id="result">
+        </div>
+    </section>
+
+
+    <script>
+        const healthData = {
+            parvovirus: {
+                description: "Parvovirus is a serious disease that makes puppies very sick by hurting their tummy and intestines.",
+                solution: "Take your dog to the vet quickly. They will give medicines and fluids to make them better.",
+                medicines: [
+                    { name: "Tamiflu", image: "https://assets.roche.com/f/169232/1024x681/d6fff22032/tamiflu.jpg",price: "15" },
+                    { name: "Antibiotics", image: "image/Parvovirus antibiotics.jpg",price: "15" },
+                    { name: "Electrolyte Drinks", image: "image/electrolyte-drinks.webp",price: "15" }
+                ]
+            },
+            distemper: {
+                description: "Distemper is a sickness that makes dogs cough, feel tired, and sometimes have shaky movements.",
+                solution: "Help your dog rest and take them to the vet for medicine to make them feel better.",
+                medicines: [
+                    { name: "Antibiotics", image: "image/Antibiotics distemper.jpg",price: "15" },
+                    { name: "Vitamins", image: "image/vitamins distemper.webp",price: "15" },
+                    { name: "Fluids", image: "image/fluids distemper.jpg",price: "15" }
+                ]
+            },
+            "kennel-cough": {
+                description: "Kennel cough makes dogs cough a lot and can happen when they are around other dogs.",
+                solution: "Keep your dog away from other dogs and give them medicine prescribed by a vet.",
+                medicines: [
+                    { name: "Cough Suppressants", image: "image/cough-suppressants.webp",price: "15" },
+                    { name: "Antibiotics", image: "image/antibiotics kennel-cough.jpg",price: "15" },
+                    { name: "Anti-inflammatory Drugs", image: "image/anti-inflammatory.webp",price: "15" }
+                ]
+            },
+            "heartworms": {
+                description: "Heartworms are parasites that can make your dog sick by damaging their heart and lungs.",
+                solution: "Take your dog to the vet for heartworm prevention, and treatment may include medication or surgery.",
+                medicines: [
+                    { name: "Heartworm Preventatives", image: "image/heartworm-preventative.jpg",price: "15" },
+                    { name: "Immiticide", image: "image/immiticide.jpg",price: "15" }
+                ]
+            },
+            "fleas-and-ticks": {
+                description: "Fleas and ticks make your dog itchy and can cause skin infections or diseases.",
+                solution: "Use anti-flea and anti-tick medicines or shampoos and keep your dog's environment clean.",
+                medicines: [
+                    { name: "Spot-on Treatments", image: "image/spot-on-treatment.jpg",price: "15" },
+                    { name: "Tick Collars", image: "image/tick-collar.jpg",price: "15" },
+                    { name: "Anti-Flea Shampoo", image: "image/anti-flea-shampoo.jpg",price: "15" }
+                ]
+            },
+            "ear-infections": {
+                description: "Ear infections make dogs scratch their ears and can cause redness or a bad smell.",
+                solution: "Clean the ears and apply ear drops prescribed by a vet.",
+                medicines: [
+                    { name: "Ear Drops", image: "image/ear-drops.jpg",price: "15" },
+                    { name: "Antibiotic Ointments", image: "image/antibiotic-ointment.jpg",price: "15" },
+                    { name: "Anti-inflammatory Drops", image: "image/anti-inflammatory-drops.jpg",price: "15" }
+                ]
+            },
+            "hip-dysplasia": {
+                description: "Hip dysplasia is a condition where the hip joint doesn't develop properly, leading to pain and movement issues.",
+                solution: "Use pain relief medications, joint supplements, and consider surgery in severe cases.",
+                medicines: [
+                    { name: "Glucosamine Supplements", image: "image/glucosamine.jpg",price: "15" },
+                    { name: "Anti-inflammatory Drugs", image: "image/hip-dysplasia anti-inflammatory.jpg",price: "15" }
+                ]
+            },
+            "skin-allergies": {
+                description: "Skin allergies cause itchiness, redness, and sometimes hair loss in dogs.",
+                solution: "Use anti-allergy shampoos, medications, and consult a vet for allergy testing.",
+                medicines: [
+                    { name: "Anti-Allergy Tablets", image: "image/anti-allergy-tablets.jpg",price: "15" },
+                    { name: "Medicated Shampoos", image: "image/medicated-shampoo.jpg",price: "15" },
+                    { name: "Corticosteroid Creams", image: "image/corticosteroid-cream.jpg",price: "15" }
+                ]
+            },
+            "obesity": {
+                description: "Obesity causes weight problems in dogs and can lead to other health issues.",
+                solution: "Provide a balanced diet, limit treats, and ensure regular exercise.",
+                medicines: [
+                    { name: "Weight Management Food", image: "image/weight-management-food.jpg",price: "15" },
+                    { name: "Omega-3 Supplements", image: "image/omega3.jpg",price: "15" },
+                    { name: "Multivitamins", image: "image/obesity multivitamins.jpg",price: "15" }
+                ]
+            },
+            "dental-disease": {
+                description: "Dental disease can lead to gum infections, tooth loss, and pain.",
+                solution: "Brush your dog's teeth regularly and provide dental chews. Consult a vet for professional cleaning.",
+                medicines: [
+                    { name: "Dental Chews", image: "image/dental-chews.jpg",price: "15" },
+                    { name: "Antibiotic Gel", image: "image/dental-disease antibiotic-gel.jpg",price: "15" }
+                ]
+            },
+            "arthritis": {
+                description: "Arthritis makes it hard for older dogs to move or walk easily due to joint pain.",
+                solution: "Give joint supplements, pain relievers, and ensure gentle exercise for your dog.",
+                medicines: [
+                    { name: "Glucosamine Supplements", image: "image/arthritis glucosamine.jpg",price: "15" },
+                    { name: "Pain Relievers", image: "image/arthritis pain-relievers.jpg",price: "15" },
+                    { name: "Anti-inflammatory Drugs", image: "image/arthritis anti-inflammatory.jpg",price: "15" }
+                ]
+            },
+            "bladder-infections": {
+                description: "Bladder infections make your dog urinate frequently and can cause discomfort.",
+                solution: "Take your dog to the vet for antibiotics and plenty of water.",
+                medicines: [
+                    { name: "Antibiotics", image: "image/bladder-infections antibiotics.jpg",price: "15" },
+                    { name: "Uti Medication", image: "image/uti-medication.jpg",price: "15" }
+                ]
+            },
+            "diabetes": {
+                description: "Diabetes is a condition where your dog has too much sugar in their blood.",
+                solution: "Manage your dog’s diabetes with insulin injections, a special diet, and regular vet visits.",
+                medicines: [
+                    { name: "Insulin Injections", image: "image/diabetes insulin.jpg",price: "15" },
+                    { name: "Diabetic Food", image: "image/diabetic-food.jpg",price: "15" }
+                ]
+            },
+            "heatstroke": {
+                description: "Heatstroke occurs when a dog overheats, causing serious health issues.",
+                solution: "Cool your dog down immediately and get them to a vet if necessary.",
+                medicines: [
+                    { name: "Cooling Mats", image: "image/cooling-mat.jpg",price: "15" },
+                    { name: "Electrolyte Supplements", image: "image/electrolyte-supplements.jpg",price: "15" }
+                ]
+            },
+            "cataracts": {
+                description: "Cataracts cloud the lens of a dog's eye, causing vision problems.",
+                solution: "Consult a vet for surgery options or management solutions.",
+                medicines: [
+                    { name: "Cataract Drops", image: "image/cataract-drops.jpg",price: "15" },
+                    { name: "Eye Supplements", image: "image/eye-supplements.jpg",price: "15" }
+                ]
+            },
+            "anal-gland-issues": {
+                description: "Anal gland problems cause discomfort, and dogs may drag their rear on the ground.",
+                solution: "Consult a vet to empty the anal glands and treat any infections.",
+                medicines: [
+                    { name: "Anal Gland Express", image: "image/anal-gland-express.jpg",price: "15" }
+                ]
+            },
+            "bloat": {
+                description: "Bloat, or Gastric Dilatation-Volvulus, causes a dog's stomach to fill with gas and twist.",
+                solution: "Seek immediate emergency veterinary care as this condition can be fatal.",
+                medicines: [
+                    { name: "Pain Relievers", image: "image/bloat pain-relievers.jpg",price: "15" },
+                    { name: "IV Fluids", image: "image/iv-fluids.jpg",price: "15" }
+                ]
+            },
+            "lyme-disease": {
+                description: "Lyme disease is transmitted by ticks and can cause joint pain and fever.",
+                solution: "Treat with antibiotics prescribed by your vet.",
+                medicines: [
+                    { name: "Doxycycline", image: "image/lyme-disease doxycycline.jpg",price: "15" },
+                    { name: "Tick Preventatives", image: "image/tick-preventative.jpg",price: "15" }
+                ]
+            },
+            "cancer": {
+                description: "Cancer can affect various organs and cause pain, swelling, or loss of appetite.",
+                solution: "Seek treatment from a vet which may include surgery, chemotherapy, or pain management.",
+                medicines: [
+                    { name: "Chemotherapy Drugs", image: "image/chemotherapy.jpg",price: "15" },
+                    { name: "Pain Relief", image: "image/pain-relief.jpg",price: "15" }
+                ]
+            },
+            "seizures": {
+                description: "Seizures cause uncontrollable shaking and muscle spasms.",
+                solution: "Consult a vet for anti-seizure medication and regular checkups.",
+                medicines: [
+                    { name: "Anti-seizure Medications", image: "image/anti-seizure.webp",price: "15" },
+                    { name: "Valium", image: "image/valium.jpg",price: "15" }
+                ]
+            },
+        };
+ // Function to display health information based on user selection
+// Function to display health information based on user selection
+function showHealthInfo() {
+        const healthIssuesDropdown = document.getElementById("dog-health-issues");
+        const selectedIssue = healthIssuesDropdown.value;
+
+        const resultContainer = document.getElementById("result");
+        resultContainer.innerHTML = ""; // Clear previous results
+
+        if (healthData[selectedIssue]) {
+            const data = healthData[selectedIssue];
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+                <h3>${selectedIssue.replace(/-/g, " ").toUpperCase()}</h3>
+                <p>${data.description}</p>
+                <p><strong>Solution:</strong> ${data.solution}</p>
+                <p><strong>Medicines:</strong></p>
+                <div class="medicines-container">
+                    ${data.medicines.map(
+                        (med) => `
+                            <div class="medicine-card">
+                                <img src="${med.image}" alt="${med.name}" class="medicine-image">
+                                <p>${med.name}</p>
+                                <p><strong>Price:</strong> ₹${med.price}</p>
+                                
+                            </div>
+                        `
+                    ).join("")}
+                </div>
+            `;
+
+            resultContainer.appendChild(card);
+        } else {
+            resultContainer.innerHTML = "<p>Please select a valid health issue.</p>";
+        }
+        let token = localStorage.getItem('token');
+}
+
+
+    </script>
+    <script src="addtocart.js">
+        document.addEventListener("DOMContentLoaded", function () {
+    let token = localStorage.getItem('token');
+
+    // Function to add an item to the cart
+    async function addToCart(medicineName, price, image, category = 'dog') {
+        if (!token) {
+            alert('Please log in to add items to your cart.');
+            return;
+        }
+
+        const cartData = { name: medicineName, price: parseFloat(price), image, category };
+
+        try {
+            let response = await fetch('http://localhost:5000/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify(cartData)
+            });
+
+            if (response.ok) {
+                alert(`${medicineName} added to cart`);
+            } else {
+                let errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to add item to cart. Please try again.');
+        }
+    }
+
+    // Attach event listener to dynamically created "Add to Cart" buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("add-to-cart")) {
+            let medicineCard = event.target.closest(".medicine-card");
+            let medicineName = medicineCard.querySelector("p").innerText;
+            let medicineImage = medicineCard.querySelector("img").src;
+            let medicinePrice = medicineCard.querySelector("strong").nextSibling.nodeValue.trim().replace("$", "");
+
+            addToCart(medicineName, medicinePrice, medicineImage);
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
+

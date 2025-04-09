@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Page - Petopia Care</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inconsolata", monospace;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #ffe4e1, #fadadd);
+    color: #333;
+    overflow: auto; 
+}
+
+/* Header Animation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    font-weight: bolder;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+header a {
+    text-decoration: none;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10px;
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+    mix-blend-mode: multiply;
+}
+
+/* Hero Section Animation */
+.hero {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.left-side:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.left-side h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.left-side label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.left-side select {
+    width: 100%;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.left-side select:focus {
+    border: 1px solid #4ecdc4;
+}
+
+/* Right-side Image Hover Animation */
+.right-side {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    top: 50px;
+    position: relative; /* Added for positioning the pseudo-element */
+}
+
+.right-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.right-side img {
+    width: 60%; /* Adjust the size of the image */
+    height: 60%; /* Adjust the size of the image */
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1; /* Ensure the image stays on top of the heart shape */
+}
+
+.right-side img:hover {
+    transform: scale(1.05);
+}
+
+/* Heart shape with baby pink color and blur effect */
+.heart {
+    position: absolute;
+    width: 500px; /* You can adjust the size */
+    height: 500px; /* You can adjust the size */
+    background: 
+        /* 1 */ radial-gradient(circle at 60% 65%, #FFB6C1 64%, transparent 65%) top left/50% 50%, 
+        /* 2 */ radial-gradient(circle at 40% 65%, #FFB6C1 64%, transparent 65%) top right/50% 50%, 
+        /* 3 */ conic-gradient(from -45deg at 50% 85.5%, #FFB6C1 90deg, transparent 0) bottom/100% 50%;
+    background-repeat: no-repeat;
+    filter: blur(10px); /* Apply blur effect */
+    z-index: 0; /* Place it behind the image */
+    border-radius: 50%; /* Ensures the heart shape stays round */
+}
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049
+        }
+
+/* Styling the result section */
+.result-page {
+    margin-top: 20px;
+    padding: 20px;
+    background: transparent;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    animation: slideUp 0.7s ease-out;
+}
+
+/* Result card styling */
+.result-page .card {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fefefe, #faf0e6);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.result-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Card headings */
+.result-page .card h3 {
+    color: #4caf50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Card paragraphs */
+.result-page .card p {
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Medicine list styling */
+.medicines-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add space between cards */
+}
+
+.medicine-card {
+    width: 150px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease-in-out;
+}
+
+.medicine-card:hover {
+    transform: scale(1.05); /* Scale up the card when hovered */
+}
+
+.medicine-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.medicine-card p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.add-to-cart {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+
+/* Animation for results sliding up */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollable behavior when results are long */
+.result-page {
+    max-height: 100%;
+    overflow-y: auto;
+}
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <a href="homepage.html">
+            <div class="logo">
+                <img src="image/logo-removebg-preview.png" alt="Petopia Logo">
+                <h1>PETOPIA CARE</h1>
+            </div>
+        </a>
+        <a href="cart.html" class="cart-icon" id="cart-icon">🛒</a>
+    </header>
+
+    <section class="hero">
+        <!-- Left Side -->
+        <section class="left-side">
+            <h4>Cats are independent yet affectionate companions who bring warmth, comfort, and playful energy to human lives.</h4>
+            <form id="healthForm">
+                <label for="cat-breeds">Choose a cat breed:</label>
+                <select id="cat-breeds" name="cat-breeds">
+                    <option value="0">select</option>
+                    <option value="persian">Persian</option>
+                    <option value="maine-coon">Maine Coon</option>
+                    <option value="siamese">Siamese</option>
+                    <option value="bengal">Bengal</option>
+                    <option value="sphynx">Sphynx</option>
+                    <option value="british-shorthair">British Shorthair</option>
+                    <option value="ragdoll">Ragdoll</option>
+                    <option value="scottish-fold">Scottish Fold</option>
+                    <option value="siberian">Siberian</option>
+                    <option value="burmese">Burmese</option>
+                </select>
+                <label for="cat-health-issues">Select a common cat health issue:</label>
+                <select id="cat-health-issues" name="cat-health-issues">
+                    <option value="0">select</option>
+                    <option value="feline-leukemia">Feline Leukemia</option>
+                    <option value="feline-panleukopenia">Feline Panleukopenia</option>
+                    <option value="urinary-tract-infections">Urinary Tract Infections</option>
+                    <option value="feline-diabetes">Feline Diabetes</option>
+                    <option value="feline-asthma">Feline Asthma</option>
+                    <option value="flea-infestation">Flea Infestation</option>
+                    <option value="ringworm">Ringworm</option>
+                    <option value="dental-disease">Dental Disease</option>
+                    <option value="obesity">Obesity</option>
+                    <option value="hairballs">Hairballs</option>
+                </select>
+                <br>
+                <button type="button" onclick="showHealthInfo()">Submit</button>
+            </form>
+            <br>
+        </section>
+    
+        <!-- Right Side -->
+        <aside class="right-side">
+            <div class="heart"></div>
+            <img src="image/cute-cat1.png" alt="Cat Image">
+        </aside>
+    </section>
+
+    <section class="result-page">
+        <div id="result">
+        </div>
+    </section>
+
+
+    <script>
+    const healthData = {
+    "feline-leukemia": {
+        description: "Feline Leukemia is a virus that weakens a cat’s immune system, making them more prone to infections.",
+        solution: "There is no cure, but supportive care, regular vet checkups, and proper nutrition help manage symptoms.",
+        medicines: [
+            { name: "Immune Boosters", image: "image/feline-leukemia immune-boosters.jpg", price: "15" },
+            { name: "Antiviral Medication", image: "image/antiviral-medication.jpg", price: "15" }
+        ]
+    },
+    "feline-panleukopenia": {
+        description: "Feline Panleukopenia is a severe viral disease that affects a cat’s intestines and immune system.",
+        solution: "Immediate vet care with fluids, antibiotics, and isolation is crucial for survival.",
+        medicines: [
+            { name: "Antibiotics", image: "image/feline-panleukopenia antibiotics.jpg", price: "15" },
+            { name: "Electrolyte Fluids", image: "image/electrolyte-fluids.jpg", price: "15" }
+        ]
+    },
+    "urinary-tract-infections": {
+        description: "UTIs cause pain while urinating, increased urination frequency, and possible blood in urine.",
+        solution: "Increase water intake, use special urinary health diets, and provide prescribed antibiotics.",
+        medicines: [
+            { name: "Antibiotics", image: "image/urinary-tract-infections antibiotics.jpg", price: "15" },
+            { name: "Urinary Health Food", image: "image/urinary-food.jpg", price: "15" }
+        ]
+    },
+    "feline-diabetes": {
+        description: "Diabetes in cats occurs when their body can't properly regulate blood sugar levels.",
+        solution: "Manage with insulin therapy, dietary changes, and regular vet monitoring.",
+        medicines: [
+            { name: "Insulin Injections", image: "image/feline-diabetes insulin.png", price: "15" },
+            { name: "Diabetic Cat Food", image: "image/diabetic-cat-food.jpg", price: "15" }
+        ]
+    },
+    "feline-asthma": {
+        description: "Feline asthma causes breathing difficulties, coughing, and wheezing due to airway inflammation.",
+        solution: "Manage with inhalers, corticosteroids, and keeping the environment dust-free.",
+        medicines: [
+            { name: "Bronchodilators", image: "image/bronchodilators.jpg", price: "15" },
+            { name: "Corticosteroids", image: "image/corticosteroids.jpg", price: "15" }
+        ]
+    },
+    "flea-infestation": {
+        description: "Fleas cause itching, skin irritation, and can lead to serious infections or allergies.",
+        solution: "Use flea treatments, flea collars, and clean your cat’s environment regularly.",
+        medicines: [
+            { name: "Flea Collar", image: "image/flea-collar.jpg", price: "15" },
+            { name: "Spot-on Flea Treatment", image: "image/spot-on-flea.jpg", price: "15" }
+        ]
+    },
+    "ringworm": {
+        description: "Ringworm is a contagious fungal infection that causes hair loss and scaly skin.",
+        solution: "Use antifungal creams, medicated shampoos, and ensure thorough disinfection.",
+        medicines: [
+            { name: "Antifungal Cream", image: "image/antifungal-cream.jpg", price: "15" },
+            { name: "Medicated Shampoo", image: "image/ringworm medicated-shampoo.jpg", price: "15" }
+        ]
+    },
+    "dental-disease": {
+        description: "Dental disease causes bad breath, tooth loss, and gum infections in cats.",
+        solution: "Brush your cat's teeth regularly and provide dental treats.",
+        medicines: [
+            { name: "Dental Chews", image: "image/dental-disease dental-chews.jpg", price: "15" },
+            { name: "Antiseptic Oral Gel", image: "image/oral-gel.jpg", price: "15" }
+        ]
+    },
+    "obesity": {
+        description: "Obesity in cats can lead to diabetes, joint issues, and reduced activity levels.",
+        solution: "Control portion sizes, encourage exercise, and switch to weight management food.",
+        medicines: [
+            { name: "Weight Control Food", image: "image/obesity Weight Control Food.jpg", price: "15" },
+            { name: "Omega-3 Supplements", image: "image/obesity omega3.png", price: "15" }
+        ]
+    },
+    "hairballs": {
+        description: "Hairballs can cause vomiting and digestive issues in cats, especially long-haired breeds.",
+        solution: "Use hairball control food, grooming, and digestive aids to prevent buildup.",
+        medicines: [
+            { name: "Hairball Remedy Gel", image: "image/hairball-gel.jpg", price: "15" },
+            { name: "Digestive Enzymes", image: "image/digestive-enzymes.jpg", price: "15" }
+        ]
+    },
+};
+
+        function showHealthInfo() {
+            const healthIssuesDropdown = document.getElementById("cat-health-issues");
+            const selectedIssue = healthIssuesDropdown.value;
+            const resultContainer = document.getElementById("result");
+            resultContainer.innerHTML = "";
+    
+            if (healthData[selectedIssue]) {
+                const data = healthData[selectedIssue];
+                const card = document.createElement("div");
+                card.className = "card";
+    
+                card.innerHTML = `
+                    <h3>${selectedIssue.replace(/-/g, " ").toUpperCase()}</h3>
+                    <p>${data.description}</p>
+                    <p><strong>Solution:</strong> ${data.solution}</p>
+                    <p><strong>Medicines:</strong></p>
+                    <div class="medicines-container">
+                        ${data.medicines.map(
+                            (med) => `
+                                <div class="medicine-card">
+                                    <img src="${med.image}" alt="${med.name}" class="medicine-image">
+                                    <p>${med.name}</p>
+                                    <p><strong>Price:</strong> ₹${med.price}</p>
+                                   
+                                </div>
+                            `
+                        ).join("")}
+                    </div>
+                `;
+    
+                resultContainer.appendChild(card);
+            } else {
+                resultContainer.innerHTML = "<p>Please select a valid health issue.</p>";
+            }
+        
+        }
+
+        
+    </script>
+<script src="addtocart.js">
+   document.addEventListener("DOMContentLoaded", function () {
+    let token = localStorage.getItem('token');
+
+    // Function to add an item to the cart
+    async function addToCart(medicineName, price, image, category = 'cat') {
+        if (!token) {
+            alert('Please log in to add items to your cart.');
+            return;
+        }
+
+        const cartData = { name: medicineName, price: parseFloat(price), image, category };
+
+        try {
+            let response = await fetch('http://localhost:5000/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify(cartData)
+            });
+
+            if (response.ok) {
+                alert(`${medicineName} added to cart`);
+            } else {
+                let errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to add item to cart. Please try again.');
+        }
+    }
+
+    // Attach event listener to dynamically created "Add to Cart" buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("add-to-cart")) {
+            let medicineCard = event.target.closest(".medicine-card");
+            let medicineName = medicineCard.querySelector("p").innerText;
+            let medicineImage = medicineCard.querySelector("img").src;
+            let medicinePrice = medicineCard.querySelector("strong").nextSibling.nodeValue.trim().replace("$", "");
+
+            addToCart(medicineName, medicinePrice, medicineImage);
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
+

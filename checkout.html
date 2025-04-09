@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #FCE4EC;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 850px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 20px;
+        }
+        .form-container, .address-list {
+            width: 48%;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+        input:focus {
+            transform: scale(1.05);
+        }
+        .btn {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn-edit { background: orange; color: white; }
+        .btn-delete { background: red; color: white; }
+        .btn-checkout {
+            background: green;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            width: 50%;
+            margin-top: 20px;
+            padding: 12px;
+        }
+        .address {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .address input[type="radio"] {
+            margin-right: 10px;
+        }
+        .checkout-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Manage Addresses</h2>
+        <div class="content">
+            <div class="form-container">
+                <form id="address-form">
+                    <input type="hidden" id="address-id">
+                    <input type="text" id="label" placeholder="Label (Home, Work, etc.)" required>
+                    <input type="text" id="street" placeholder="Street" required>
+                    <input type="text" id="city" placeholder="City" required>
+                    <input type="text" id="state" placeholder="State" required>
+                    <input type="text" id="zip" placeholder="ZIP Code" required>
+                    <input type="text" id="country" placeholder="Country" required>
+                    <button type="submit" class="btn">Save Address</button>
+                </form>
+            </div>
+            <div class="address-list" id="address-list">
+                <h3>Saved Addresses</h3>
+            </div>
+        </div>
+        <div class="checkout-container">
+            <button class="btn btn-checkout" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token'); // Assume token is stored in local storage
+        const apiUrl = 'http://localhost:5000/addresses';
+        let selectedAddress = null;
+
+        async function fetchAddresses() {
+            const res = await fetch(apiUrl, { headers: { Authorization: `Bearer ${token}` } });
+            const data = await res.json();
+            document.getElementById('address-list').innerHTML = data.addresses.map(addr => `
+                <div class="address">
+                    <input type="radio" name="selectedAddress" value="${addr._id}" onchange="selectAddress('${addr._id}')">
+                    <p><strong>${addr.label}</strong></p>
+                    <p>${addr.street}, ${addr.city}, ${addr.state}, ${addr.zip}, ${addr.country}</p>
+                    <button class="btn btn-edit" onclick="editAddress('${addr._id}', '${addr.label}', '${addr.street}', '${addr.city}', '${addr.state}', '${addr.zip}', '${addr.country}')">Edit</button>
+                    <button class="btn btn-delete" onclick="deleteAddress('${addr._id}')">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function selectAddress(id) {
+            selectedAddress = id;
+        }
+
+        document.getElementById('address-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('address-id').value;
+            const addressData = {
+                label: document.getElementById('label').value,
+                street: document.getElementById('street').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zip: document.getElementById('zip').value,
+                country: document.getElementById('country').value
+            };
+            
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${apiUrl}/${id}` : apiUrl;
+            await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify(addressData)
+            });
+            document.getElementById('address-form').reset();
+            fetchAddresses();
+        });
+
+        function editAddress(id, label, street, city, state, zip, country) {
+            document.getElementById('address-id').value = id;
+            document.getElementById('label').value = label;
+            document.getElementById('street').value = street;
+            document.getElementById('city').value = city;
+            document.getElementById('state').value = state;
+            document.getElementById('zip').value = zip;
+            document.getElementById('country').value = country;
+        }
+
+        async function deleteAddress(id) {
+            await fetch(`${apiUrl}/${id}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            fetchAddresses();
+        }
+
+        function proceedToCheckout() {
+    if (!selectedAddress) {
+        alert('Please select an address to proceed to checkout.');
+        return;
+    }
+    // Save the selected address in localStorage
+    localStorage.setItem('selectedAddress', selectedAddress);
+    
+    // Redirect to the checkout confirmation page
+    window.location.href = 'confirmation.html'; // Ensure this matches your actual confirmation page URL
+}
+
+
+        fetchAddresses();
+    </script>
+</body>
+</html>

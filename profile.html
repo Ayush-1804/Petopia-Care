@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background with pet emojis repeating in a slight tilt */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: repeating-linear-gradient(45deg, 
+        transparent 10px, transparent 40px, 
+        #ffccf2 40px, #ffccf2 80px),
+        repeating-linear-gradient(-45deg, 
+        transparent 10px, transparent 40px, 
+        #ffccf2 40px, #ffccf2 80px);
+    background-size: 150px 150px;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.profile-container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    border: 2px solid #ff99cc;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #ff66b3;
+}
+
+.profile-details {
+    margin-top: 15px;
+}
+
+h2 {
+    color: #ff3385;
+    margin: 5px 0;
+    font-size: 22px;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ff99cc;
+    border-radius: 5px;
+    background: #ffe6f2;
+}
+
+.btn, .order-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn {
+    background: #ff3385;
+    color: white;
+}
+
+.btn:hover {
+    background: #cc0066;
+    transform: scale(1.05);
+}
+
+.order-btn {
+    background: #28a745;
+    color: white;
+}
+
+.order-btn:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+}
+
+</style>
+</head>
+<body>
+    <div class="profile-container">
+        <img id="avatar" src="" alt="User Avatar" class="avatar">
+        <div class="profile-details">
+            <h2 id="username">Username</h2>
+            <p id="email">Email</p>
+        </div>
+        <input type="text" id="avatarUrl" placeholder="New Avatar URL">
+        <button class="btn" id="updateAvatarBtn">Update Avatar</button>
+        <!-- <button class="order-btn" onclick="window.location.href='order.html'">Order list</button> -->
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        const profileUrl = 'http://localhost:5000/profile';
+        const updateAvatarUrl = 'http://localhost:5000/update-avatar';
+
+        // Fetch user profile data
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch(profileUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch profile');
+                    window.location.href="homepage.html";
+                }
+
+                const { data } = await response.json();
+                document.getElementById('username').innerText = data.username;
+                document.getElementById('email').innerText = data.email;
+                document.getElementById('avatar').src = data.avatar;
+            } catch (error) {
+                console.error(error);
+                alert('Error fetching profile data');
+                window.location.href="homepage.html";
+            }
+        };
+
+        // Update user avatar
+        const updateAvatar = async () => {
+            const newAvatar = document.getElementById('avatarUrl').value;
+            if (!newAvatar) {
+                alert('Please provide a new avatar URL');
+                return;
+            }
+
+            try {
+                const response = await fetch(updateAvatarUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ avatar: newAvatar }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update avatar');
+                }
+
+                const { avatar } = await response.json();
+                document.getElementById('avatar').src = avatar;
+                alert('Avatar updated successfully');
+            } catch (error) {
+                console.error(error);
+                alert('Error updating avatar');
+            }
+        };
+
+        document.getElementById('updateAvatarBtn').addEventListener('click', updateAvatar);
+
+        // Initialize profile fetch
+        fetchProfile();
+    </script>
+</body>
+</html>

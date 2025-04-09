@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Page - Petopia Care</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inconsolata", monospace;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #ffe4e1, #fadadd);
+    color: #333;
+    overflow: auto; 
+}
+
+/* Header Animation */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    font-weight: bolder;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+header a {
+    text-decoration: none;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10px;
+}
+
+.logo img {
+    width: 70px;
+    height: 70px;
+    mix-blend-mode: multiply;
+}
+
+/* Hero Section Animation */
+.hero {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.left-side:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.left-side h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.left-side label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.left-side select {
+    width: 100%;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.left-side select:focus {
+    border: 1px solid #4ecdc4;
+}
+
+/* Right-side Image Hover Animation */
+.right-side {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    top: 50px;
+    position: relative; /* Added for positioning the pseudo-element */
+}
+
+.right-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.right-side img {
+    width: 60%; /* Adjust the size of the image */
+    height: 60%; /* Adjust the size of the image */
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1; /* Ensure the image stays on top of the heart shape */
+}
+
+.right-side img:hover {
+    transform: scale(1.05);
+}
+
+/* Heart shape with baby pink color and blur effect */
+.heart {
+    position: absolute;
+    width: 500px; /* You can adjust the size */
+    height: 500px; /* You can adjust the size */
+    background: 
+        /* 1 */ radial-gradient(circle at 60% 65%, #FFB6C1 64%, transparent 65%) top left/50% 50%, 
+        /* 2 */ radial-gradient(circle at 40% 65%, #FFB6C1 64%, transparent 65%) top right/50% 50%, 
+        /* 3 */ conic-gradient(from -45deg at 50% 85.5%, #FFB6C1 90deg, transparent 0) bottom/100% 50%;
+    background-repeat: no-repeat;
+    filter: blur(10px); /* Apply blur effect */
+    z-index: 0; /* Place it behind the image */
+    border-radius: 50%; /* Ensures the heart shape stays round */
+}
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049
+        }
+
+/* Styling the result section */
+.result-page {
+    margin-top: 20px;
+    padding: 20px;
+    background: transparent;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    animation: slideUp 0.7s ease-out;
+}
+
+/* Result card styling */
+.result-page .card {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fefefe, #faf0e6);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.result-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Card headings */
+.result-page .card h3 {
+    color: #4caf50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Card paragraphs */
+.result-page .card p {
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Medicine list styling */
+.medicines-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add space between cards */
+}
+
+.medicine-card {
+    width: 150px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease-in-out;
+}
+
+.medicine-card:hover {
+    transform: scale(1.05); /* Scale up the card when hovered */
+}
+
+.medicine-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.medicine-card p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.add-to-cart {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+
+/* Animation for results sliding up */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollable behavior when results are long */
+.result-page {
+    max-height: 100%;
+    overflow-y: auto;
+}
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <a href="homepage.html">
+            <div class="logo">
+                <img src="image/logo-removebg-preview.png" alt="Petopia Logo">
+                <h1>PETOPIA CARE</h1>
+            </div>
+        </a>
+        <a href="cart.html" class="cart-icon" id="cart-icon">🛒</a>
+    </header>
+
+    <section class="hero">
+        <!-- Left Side -->
+        <section class="left-side">
+            <h4>Birds are intelligent and social companions that bring joy with their songs and vibrant colors.</h4>
+            <form id="birdHealthForm">
+                <label for="bird-breeds">Choose a bird breed:</label>
+                <select id="bird-breeds" name="bird-breeds">
+                    <option value="0">select</option>
+                    <option value="parrot">Parrot</option>
+                    <option value="canary">Canary</option>
+                    <option value="budgie">Budgie</option>
+                    <option value="cockatiel">Cockatiel</option>
+                    <option value="macaw">Macaw</option>
+                    <option value="lovebird">Lovebird</option>
+                    <option value="finch">Finch</option>
+                </select>
+                <label for="bird-health-issues">Select a common bird health issue:</label>
+                <select id="bird-health-issues" name="bird-health-issues">
+                    <option value="0">select</option>
+                    <option value="psittacosis">Psittacosis</option>
+                    <option value="mites-infestation">Mites Infestation</option>
+                    <option value="respiratory-infections">Respiratory Infections</option>
+                    <option value="egg-binding">Egg Binding</option>
+                    <option value="feather-plucking">Feather Plucking</option>
+                    <option value="nutritional-deficiency">Nutritional Deficiency</option>
+                    <option value="sour-crop">Sour Crop</option>
+                </select>
+                <br>
+                <button type="button" onclick="showBirdHealthInfo()">Submit</button>
+            </form>
+            <br>
+        </section>
+    
+        <!-- Right Side -->
+        <aside class="right-side">
+            <div class="heart"></div>
+            <img src="image/cute-bird2.png" alt="Bird Image">
+        </aside>
+    </section>
+
+    <section class="result-page">
+        <div id="result">
+        </div>
+    </section>
+
+
+    <script>
+        const birdHealthData = {
+            "psittacosis": {
+                description: "Psittacosis is a bacterial infection affecting birds, causing respiratory issues and lethargy.",
+                solution: "Treated with antibiotics and maintaining a clean environment.",
+                medicines: [
+                    { name: "Antibiotics", image: "image/psittacosis antibiotics.jpg", price: "15" },
+                    { name: "Immune Booster", image: "image/psittacosis immune-booster.webp", price: "15" }
+                ]
+            },
+            "mites-infestation": {
+                description: "Mites cause severe itching, feather loss, and discomfort in birds.",
+                solution: "Use anti-mite sprays and maintain hygiene.",
+                medicines: [
+                    { name: "Anti-Mite Spray", image: "image/anti-mite-spray.jpg", price: "15" },
+                    { name: "Feather Conditioner", image: "image/feather-conditioner.jpg", price: "15" }
+                ]
+            },
+            "respiratory-infections": {
+                description: "Respiratory infections lead to wheezing, nasal discharge, and difficulty breathing.",
+                solution: "Use antibiotics and ensure proper ventilation.",
+                medicines: [
+                    { name: "Respiratory Drops", image: "image/respiratory-drops.webp", price: "15" },
+                    { name: "Vitamin Supplements", image: "image/vitamin-supplements.jpg", price: "15" }
+                ]
+            },
+            "egg-binding": {
+                description: "Egg binding occurs when a female bird is unable to lay an egg, causing distress.",
+                solution: "Calcium supplements and vet assistance are crucial.",
+                medicines: [
+                    { name: "Calcium Supplement", image: "image/calcium-supplement.jpg", price: "15" },
+                    { name: "Egg-Laying Aid", image: "image/egg-laying-aid.webp", price: "15" }
+                ]
+            },
+            "feather-plucking": {
+                description: "Feather plucking is often caused by stress, boredom, or underlying illness.",
+                solution: "Provide enrichment and ensure a balanced diet.",
+                medicines: [
+                    { name: "Anti-Stress Drops", image: "image/anti-stress-drops.jpg", price: "15" },
+                    { name: "Feather Regrowth Spray", image: "image/feather-regrowth-spray.jpg", price: "15" }
+                ]
+            },
+            "nutritional-deficiency": {
+                description: "Poor diet leads to weak feathers, weight loss, and poor immunity.",
+                solution: "Use vitamin and mineral-enriched food.",
+                medicines: [
+                    { name: "Multivitamin Drops", image: "image/multivitamin-drops.webp", price: "15" },
+                    { name: "Mineral Blocks", image: "image/mineral-blocks.jpg", price: "15" }
+                ]
+            },
+            "sour-crop": {
+                description: "Sour crop is a yeast infection causing swelling and food regurgitation.",
+                solution: "Treated with antifungal medication and proper hydration.",
+                medicines: [
+                    { name: "Antifungal Medication", image: "image/antifungal-medication.webp", price: "15" },
+                    { name: "Probiotic Supplement", image: "image/probiotic-supplement.jpg", price: "15" }
+                ]
+            },
+        };
+        
+        function showBirdHealthInfo() {
+            const healthIssuesDropdown = document.getElementById("bird-health-issues");
+            const selectedIssue = healthIssuesDropdown.value;
+            const resultContainer = document.getElementById("result");
+            resultContainer.innerHTML = "";
+        
+            if (birdHealthData[selectedIssue]) {
+                const data = birdHealthData[selectedIssue];
+                const card = document.createElement("div");
+                card.className = "card";
+        
+                card.innerHTML = `
+                    <h3>${selectedIssue.replace(/-/g, " ").toUpperCase()}</h3>
+                    <p>${data.description}</p>
+                    <p><strong>Solution:</strong> ${data.solution}</p>
+                    <p><strong>Medicines:</strong></p>
+                    <div class="medicines-container">
+                        ${data.medicines.map(
+                            (med) => `
+                                <div class="medicine-card">
+                                    <img src="${med.image}" alt="${med.name}" class="medicine-image">
+                                    <p>${med.name}</p>
+                                    <p><strong>Price:</strong> ₹${med.price}</p>
+                                    
+                                </div>
+                            `
+                        ).join("")}
+                    </div>
+                `;
+        
+                resultContainer.appendChild(card);
+            } else {
+                resultContainer.innerHTML = "<p>Please select a valid health issue.</p>";
+            }
+           
+        }
+
+        </script>
+<script src="addtocart.js">
+  document.addEventListener("DOMContentLoaded", function () {
+    let token = localStorage.getItem('token');
+
+    // Function to add an item to the cart
+    async function addToCart(medicineName, price, image, category = 'bird') {
+        if (!token) {
+            alert('Please log in to add items to your cart.');
+            return;
+        }
+
+        const cartData = { name: medicineName, price: parseFloat(price), image, category };
+
+        try {
+            let response = await fetch('http://localhost:5000/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                },
+                body: JSON.stringify(cartData)
+            });
+
+            if (response.ok) {
+                alert(`${medicineName} added to cart`);
+            } else {
+                let errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to add item to cart. Please try again.');
+        }
+    }
+
+    // Attach event listener to dynamically created "Add to Cart" buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("add-to-cart")) {
+            let medicineCard = event.target.closest(".medicine-card");
+            let medicineName = medicineCard.querySelector("p").innerText;
+            let medicineImage = medicineCard.querySelector("img").src;
+            let medicinePrice = medicineCard.querySelector("strong").nextSibling.nodeValue.trim().replace("$", "");
+
+            addToCart(medicineName, medicinePrice, medicineImage);
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Medicines</title>
+<style>
+    /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FCE4EC;
+    overflow-x: hidden;
+}
+
+/* Glass Effect */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border-radius: 15px; 
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.logo h1 {
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff6b6b, #f8b400, #4ecdc4, #5c7cfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 3s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.header .logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: filter 0.3s ease;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.6);
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cart-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #e91e63;
+    transition: transform 0.3s ease;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Main Container */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 100px 20px 20px; /* Adjusted for fixed header */
+    justify-items: center;
+}
+
+/* Medicine Card */
+.medicine-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Card Hover Effects */
+.medicine-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Medicine Image */
+.medicine-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Image Hover Effect */
+.medicine-card img:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Medicine Name */
+.medicine-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+/* Price */
+.medicine-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Add to Cart Button */
+.medicine-card button {
+    background: linear-gradient(45deg, #e91e63, #ff4081);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* Disabled Button */
+.medicine-card button:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+/* Button Hover Effect */
+.medicine-card button:hover {
+    background: linear-gradient(45deg, #d81b60, #ff3d75);
+    transform: translateY(-2px);
+}
+
+/* Floating Ribbon */
+.medicine-card::before {
+    content: "BESTSELLER";
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    background: #ff5722;
+    color: white;
+    padding: 5px 15px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(45deg);
+    display: none; /* Show conditionally */
+}
+
+/* Bestseller Highlight */
+.medicine-card.bestseller::before {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
+    }
+
+    .medicine-card {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .medicine-card h3 {
+        font-size: 16px;
+    }
+
+    .medicine-card p {
+        font-size: 14px;
+    }
+
+    .medicine-card button {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+}
+
+.container .card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="header">
+        <a href="homepage.html" class="logo">
+            <img src="image\logo-removebg-preview.png" alt="">
+            <h1>PETOPIA CARE</h1>
+        </a>
+        <input type="text" class="search-bar" placeholder="Search Medicines..." id="search-bar">
+        <a href="cart.html" class="cart-icon" id="cart-icon" style="text-decoration: none;">🛒</a>
+    </div>
+    <div class="container" id="medicine-container"></div>
+
+    <script>
+        document.addEventListener("scroll", function () {
+            const header = document.querySelector(".header");
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+
+        const medicines = [
+            { id: 1, name: "Dog Deworming Tablets",price: 10.99, image: "image/Dog Deworming Tablets.jpg" },
+            { id: 2, name: "Cat Flea Spray",price: 10.99, image: "image/Cat Flea Spray.webp" },
+            { id: 3, name: "Fish Antibiotics",price: 10.99, image: "image/Fish Antibiotics.jpg" },
+            { id: 4, name: "Bird Multivitamins",price: 10.99, image: "image/Bird Multivitamins.jpg" },
+            { id: 5, name: "Dog Joint Supplements",price: 10.99, image: "image/Dog Joint Supplements.jpg" },
+            { id: 6, name: "Cat Hairball Relief",price: 10.99, image: "image/Cat Hairball Relief.jpg" },
+            { id: 7, name: "Fish Water Conditioner",price: 10.99, image: "image/Fish Water Conditioner new.jpg" },
+            { id: 8, name: "Bird Feather Care Spray",price: 10.99, image: "image/Bird Feather Care Spray.jpg" },
+            { id: 9, name: "Dog Skin Allergy Tablets",price: 10.99, image: "image/Dog Skin Allergy Tablets.jpg" },
+            { id: 10, name: "Cat Dental Treats",price: 10.99, image: "image/Cat Dental Treats.jpg" },
+            { id: 11, name: "Fish Anti-Fungal Treatment",price: 10.99, image: "image/Fish Anti-Fungal Treatment.jpg" },
+            { id: 12, name: "Bird Digestive Enzymes",price: 10.99, image: "image/Bird Digestive Enzymes.jpg" },
+            { id: 13, name: "Dog Pain Relief Medicine",price: 10.99, image: "image/Dog Pain Relief Medicine.jpg" },
+            { id: 14, name: "Cat Ear Cleaning Solution",price: 10.99, image: "image/Cat Ear Cleaning Solution.jpg" },
+            { id: 15, name: "Fish Fin Rot Cure",price: 10.99, image: "image/Fish Fin Rot Cure.jpg" },
+            { id: 16, name: "Bird Calcium Supplements",price: 10.99, image: "image/Bird Calcium Supplements.jpg" },
+            { id: 17, name: "Dog Digestive Support",price: 10.99, image: "image/Dog Digestive Support.jpg" },
+            { id: 18, name: "Cat Skin and Coat Supplement",price: 10.99, image: "image/Cat Skin and Coat Supplement.jpg" },
+            { id: 19, name: "Fish Internal Parasite Treatment",price: 10.99, image: "image/Fish Internal Parasite Treatment.jpg" },
+            { id: 20, name: "Bird Immune Booster",price: 10.99, image: "image/Bird Immune Booster.webp" },
+            { id: 21, name: "Dog Anxiety Relief",price: 10.99, image: "image/Dog Anxiety Relief.webp" },
+            { id: 22, name: "Cat Urinary Tract Support",price: 10.99, image: "image/Cat Urinary Tract Support.jpg" },
+            { id: 23, name: "Fish Parasite Cleaner",price: 10.99, image: "image/Fish Parasite Cleaner.jpg" },
+            { id: 24, name: "Bird vitamin D Supplement",price: 10.99, image: "image/Bird vitamin D Supplement.jpg" },
+            { id: 25, name: "Dog Ear Infection Drops",price: 10.99, image: "image/Dog Ear Infection Drops.jpg" },
+            { id: 26, name: "Cat Digestive Aid",price: 10.99, image: "image/Cat Digestive Aid.jpg" },
+            { id: 27, name: "Fish Stress Relief",price: 10.99, image: "image/Fish Stress Relief.jpg" },
+            { id: 28, name: "Bird Antioxidant Supplement",price: 10.99, image: "image/Bird Antioxidant Supplement.jpg" },
+            { id: 29, name: "Dog Cough Suppressant",price: 10.99, image: "image/Dog Cough Suppressant.jpg" },
+            { id: 30, name: "Cat Flea Prevention",price: 10.99, image: "image/Cat Flea Prevention.jpg" },
+            { id: 31, name: "Fish Gill Health Supplement",price: 10.99, image: "image/Fish Gill Health Supplement.jpg" },
+            { id: 32, name: "Bird Respiratory Health",price: 10.99, image: "image/Bird Respiratory Health.webp" },
+            { id: 33, name: "Dog Calming Chews",price: 10.99, image: "image/Dog Calming Chews.jpg" },
+            { id: 34, name: "Cat Eye Care Drops",price: 10.99, image: "image/Cat Eye Care Drops.jpg" },
+            { id: 35, name: "Fish Water pH Balancer",price: 10.99, image: "image/Fish Water pH Balancer.jpg" },
+            { id: 36, name: "Bird Probiotic Supplement",price: 10.99, image: "image/Bird Probiotic Supplement.jpg" },
+            { id: 37, name: "Dog Skin Infection Ointment",price: 10.99, image: "image/Dog Skin Infection Ointment.jpg" },
+            { id: 38, name: "Cat Hair Growth Formula",price: 10.99, image: "image/Cat Hair Growth Formula.jpg" },
+            { id: 39, name: "Fish Tank Algae Control",price: 10.99, image: "image/Fish Tank Algae Control.jpg" },
+            { id: 40, name: "Bird Feather Regrowth",price: 10.99, image: "image/Bird Feather Regrowth.webp" },
+            { id: 41, name: "Dog Heartworm Prevention",price: 10.99, image: "image/Dog Heartworm Prevention.jpg" },
+            { id: 42, name: "Cat Allergy Relief",price: 10.99, image: "image/Cat Allergy Relief.jpg" },
+            { id: 43, name: "Fish Fungus Treatment",price: 10.99, image: "image/Fish Fungus Treatment.jpg" },
+            { id: 44, name: "Bird Vitamin C Supplement",price: 10.99, image: "image/Bird Vitamin C Supplement.jpg" },
+            { id: 45, name: "Dog Flea and Tick Preventative",price: 10.99, image: "image/Dog Flea and Tick Preventative.jpg" },
+            { id: 46, name: "Cat Worming Tablets",price: 10.99, image: "image/Cat Worming Tablets.jpg" },
+            { id: 47, name: "Fish Antibacterial Solution",price: 10.99, image: "image/Fish Antibacterial Solution.jpg" },
+            { id: 48, name: "Bird Calcium D3 Supplement",price: 10.99, image: "image/Bird Calcium D3 Supplement.jpg" },
+            { id: 49, name: "Dog Joint Pain Relief",price: 10.99, image: "image/Dog Joint Pain Relief.jpg" },
+            { id: 50, name: "Cat Flea Collar",price: 10.99, image: "image/Cat Flea Collar.jpg" },
+            { id: 51, name: "Fish Water Clarity Treatment",price: 10.99, image: "image/Fish Water Clarity Treatment.webp" },
+            { id: 52, name: "Bird Vitamin B Complex",price: 10.99, image: "image/Bird Vitamin B Complex.jpg" },
+            { id: 53, name: "Dog Teething Gel",price: 10.99, image: "image/Dog Teething Gel.jpg" },
+            { id: 54, name: "Cat Dehydration Treatment",price: 10.99, image: "image/Cat Dehydration Treatment.jpg" },
+            { id: 55, name: "Fish Anti-Parasite Formula",price: 10.99, image: "image/Fish Anti-Parasite Formula.jpg" },
+            { id: 56, name: "Bird Multivitamin with Iron",price: 10.99, image: "image/Bird Multivitamin with Iron.jpg" },
+            { id: 57, name: "Dog Bone and Joint Support",price: 10.99, image: "image/Dog Bone and Joint Support.jpg" },
+            { id: 58, name: "Cat Respiratory Relief",price: 10.99, image: "image/Cat Respiratory Relief.jpg" },
+            { id: 59, name: "Fish Aquatic Immune Booster",price: 10.99, image: "image/Fish Aquatic Immune Booster.jpg" },
+            { id: 60, name: "Bird Digestive Health Formula",price: 10.99, image: "image/Bird Digestive Health Formula.png" },
+            { id: 61, name: "Dog Flea Shampoo",price: 10.99, image: "image/Dog Flea Shampoo.jpg" },
+            { id: 62, name: "Cat Arthritis Support",price: 10.99, image: "image/Cat Arthritis Support.jpg" },
+            { id: 63, name: "Fish Anti-Ich Treatment",price: 10.99, image: "image/Fish Anti-Ich Treatment.jpg" },
+            { id: 64, name: "Bird Antifungal Treatment",price: 10.99, image: "image/Bird Antifungal Treatment.jpg" },
+            { id: 65, name: "Dog Flea and Tick Shampoo",price: 10.99, image: "image/Dog Flea and Tick Shampoo.jpg" },
+            { id: 66, name: "Cat Heart Health Supplement",price: 10.99, image: "image/Cat Heart Health Supplement.jpg" },
+            { id: 67, name: "Fish Vitamin Supplement",price: 10.99, image: "image/Fish Vitamin Supplement.jpg" },
+            { id: 68, name: "Bird Stress Relief Drops",price: 10.99, image: "image/Bird Stress Relief Drops.jpg" },
+            { id: 69, name: "Dog Ear Cleaner",price: 10.99, image: "image/Dog Ear Cleaner.jpg" },
+            { id: 70, name: "Cat Digestive Health Treats",price: 10.99, image: "image/Cat Digestive Health Treats new.jpg" },
+            { id: 71, name: "Fish Tank Detoxifier",price: 10.99, image: "image/Fish Tank Detoxifier.jpg" },
+            { id: 72, name: "Bird Feather Plucking Remedy",price: 10.99, image: "image/Bird Feather Plucking Remedy.jpg" },
+            { id: 73, name: "Dog Odor Control Spray",price: 10.99, image: "image/Dog Odor Control Spray.jpg" },
+            { id: 74, name: "Cat Urinary Support Treats",price: 10.99, image: "image/Cat Urinary Support Treats.jpg" },
+            { id: 75, name: "Fish Healing Gel",price: 10.99, image: "image/Fish Healing Gel.jpg" },
+            { id: 76, name: "Dog Anxiety Relief Chews",price: 10.99, image: "image/Dog Anxiety Relief Chews.jpg" },
+        ];
+
+
+        const container = document.getElementById("medicine-container");
+const searchBar = document.getElementById("search-bar");
+
+// Function to check if the user is logged in
+function isUserLoggedIn() {
+    return localStorage.getItem("token") !== null;
+}
+
+// Function to display medicines
+function displayMedicines(filteredMedicines) {
+    container.innerHTML = ""; // Clear existing medicines
+
+    filteredMedicines.forEach((medicine) => {
+        const card = document.createElement("div");
+        card.classList.add("medicine-card");
+
+        card.innerHTML = `
+            <img src="${medicine.image}" alt="${medicine.name}">
+            <h3>${medicine.name}</h3>
+            <p>${medicine.name}</p>
+            <p><strong>Price:</strong> ₹${medicine.price.toFixed(2)}</p>
+            <button class="add-to-cart" data-id="${medicine.id}" 
+                data-name="${medicine.name}" 
+                data-image="${medicine.image}" 
+                data-price="${medicine.price}">Add to Cart</button>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+displayMedicines(medicines);
+
+// Function to add an item to the cart
+document.addEventListener("DOMContentLoaded", function () {
+    let token = localStorage.getItem("token");
+
+    async function addToCart(medicineName, medicineImage, medicinePrice) {
+        if (!token) {
+            alert("Please log in to add items to the cart.");
+            return;
+        }
+
+        const cartData = { name: medicineName, image: medicineImage, price: parseFloat(medicinePrice), quantity: 1 };
+
+        try {
+            let response = await fetch("http://localhost:5000/cart/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(cartData)
+            });
+
+            if (response.ok) {
+                alert(`${medicineName} added to cart!`);
+            } else {
+                let errorData = await response.json();
+                alert(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to add item to cart. Please try again.");
+        }
+    }
+
+    // Attach event listener to dynamically created "Add to Cart" buttons
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("add-to-cart")) {
+            let medicineName = event.target.getAttribute("data-name");
+            let medicineImage = event.target.getAttribute("data-image");
+            let medicinePrice = event.target.getAttribute("data-price");
+
+            addToCart(medicineName, medicineImage, medicinePrice);
+        }
+    });
+});
+
+
+// Search bar functionality
+searchBar.addEventListener("input", function () {
+    const query = searchBar.value.toLowerCase();
+    const filteredMedicines = medicines.filter(medicine => medicine.name.toLowerCase().includes(query));
+    displayMedicines(filteredMedicines);
+});
+
+
+    </script>
+
+</body>
+</html>
