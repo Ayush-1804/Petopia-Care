@@ -1,1 +1,2 @@
 # Petopia-Care
+Petopia Care is a pet-care e-commerce platform that allows users to purchase medicines, food, grooming products, and other pet essentials. It features an interactive interface where users can select common pet health issues to view related symptoms, suggested treatments, and recommended products. Petopia simplifies pet healthcare by combining product shopping with informative guidance, making it easier for pet owners to care for their animals.
